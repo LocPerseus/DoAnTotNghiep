@@ -1,5 +1,5 @@
 const Category = require('../models/Category');
-const catchAsync = require('./catchAsync');
+const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 // exports.checkID = (req, res, next, val) => {
 //     console.log(`Category id is: ${val}`);
