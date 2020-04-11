@@ -1,10 +1,10 @@
-const Category = require('../models/Category');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-// exports.checkID = (req, res, next, val) => {
-//     console.log(`Category id is: ${val}`);
-//     if (req.params.id * 1 > )
-// }
+const Category = require('../models/Category')
+const catchAsync = require('../utils/catchAsync')
+const AppError = require('../utils/appError')
+    // exports.checkID = (req, res, next, val) => {
+    //     console.log(`Category id is: ${val}`);
+    //     if (req.params.id * 1 > )
+    // }
 
 // exports.checkBody = (req, res, next) => {
 //     if (!req.body.name) {
@@ -17,7 +17,8 @@ const AppError = require('../utils/appError');
 // }
 
 exports.getAllCategories = catchAsync(async(req, res, next) => {
-    const categories = await Category.find();
+    const categories = await Category.find()
+
     res.status(200).json({
         status: 'Success',
         result: categories.length,
@@ -28,9 +29,10 @@ exports.getAllCategories = catchAsync(async(req, res, next) => {
 })
 
 exports.getCategory = catchAsync(async(req, res, next) => {
-    const category = await Category.findById(req.params.id);
+    const category = await Category.findById(req.params.id)
+
     if (!category) {
-        return next(new AppError('No category found with that ID', 404));
+        return next(new AppError('No category found with that ID', 404))
     }
     res.status(201).json({
         status: 'Success',
@@ -40,40 +42,42 @@ exports.getCategory = catchAsync(async(req, res, next) => {
     })
 })
 
-
 exports.createCategory = catchAsync(async(req, res, next) => {
     // const newCategory = new Category({});
     // newCategory.save();
-    const newCategory = await Category.create(req.body);
+    const newCategory = await Category.create(req.body)
+
     res.status(201).json({
         status: 'Success',
         data: {
             category: newCategory
         }
     })
-});
+})
 
 exports.deleteCategory = catchAsync(async(req, res, next) => {
-    const category = await Category.findByIdAndDelete(req.params.id, req.body);
+    const category = await Category.findByIdAndDelete(req.params.id, req.body)
+
     if (!category) {
-        return next(new AppError('No category found with that ID', 404));
+        return next(new AppError('No category found with that ID', 404))
     }
     res.status(204).json({
         status: 'Success',
         category: null
     })
-});
+})
 
 exports.updateCategory = catchAsync(async(req, res, next) => {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true
-    });
+    })
+
     if (!category) {
-        return next(new AppError('No category found with that ID', 404));
+        return next(new AppError('No category found with that ID', 404))
     }
     res.status(200).json({
         status: 'Success',
         category: category
     })
-});
+})

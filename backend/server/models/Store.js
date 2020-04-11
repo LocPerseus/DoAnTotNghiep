@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
+const OBJECT_ID = mongoose.Schema.Types.ObjectId
 
 const storeSchema = mongoose.Schema({
     name: {
@@ -25,20 +26,16 @@ const storeSchema = mongoose.Schema({
         trim: true
     },
     imageCover: {
-        type: String,
-        required: [true, 'A store must have a cover image']
+        type: String
     },
     images: [String],
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-        select: false
-    },
-    belongToUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User', require: true },
-    categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }]
+    belongToUser: { type: OBJECT_ID, ref: 'User', require: true },
+    categories: [{ type: OBJECT_ID, ref: 'Category' }],
+    comments: [{ type: OBJECT_ID, ref: 'Comment' }]
+}, {
+    timestamps: true
+})
 
-});
+const Store = mongoose.model('Store', storeSchema)
 
-const Store = mongoose.model('Store', storeSchema);
-
-module.exports = Store;
+module.exports = Store

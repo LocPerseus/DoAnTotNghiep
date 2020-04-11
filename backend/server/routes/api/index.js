@@ -1,12 +1,17 @@
-const router = require('express').Router();
-const productRouter = require('./Product');
-const categoryRouter = require('./Category');
-const tagsRouter = require('./Tags');
-const userRouter = require('./Users');
+const router = require('express').Router()
 
-router.use('/product', productRouter);
-router.use('/category', categoryRouter);
-router.use('/users', userRouter);
-// router.use('/api/v1/tags', tagsRouter);
+const productRouter = require('./Product')
+const categoryRouter = require('./Category')
+const tagsRouter = require('./Tags')
+const userRouter = require('./Users')
+const storeRouter = require('./Store')
+const cartRouter = require('./Cart')
 
-module.exports = router;
+router.use('/products', productRouter)
+router.use('/categories', categoryRouter)
+router.use('/users', userRouter)
+router.use('/stores', storeRouter)
+router.use('/carts', cartRouter)
+    // router.use('/api/v1/tags', tagsRouter);
+
+module.exports = router

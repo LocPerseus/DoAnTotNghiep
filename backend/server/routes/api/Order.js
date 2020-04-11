@@ -1,11 +1,12 @@
 const express = require('express')
-const categoryController = require('../../controllers/CategoryController')
-const authController = require('../../controllers/AuthController')
 const router = express.Router()
+
+const orderController = require('../../controllers/OrderController')
+const authController = require('../../controllers/AuthController')
 
 router
     .route('/')
-    .get(categoryController.getAllCategories)
+    .get(orderController.getAllCategories)
     .post(
         authController.protect,
         authController.restrictTo('admin', 'store'),

@@ -10,19 +10,14 @@ const categorySchema = mongoose.Schema({
         type: String,
         unique: true,
         required: [true, 'A category must have a name']
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-        select: false
-    },
-    product: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
+    }
 }, {
     timestamps: true
 })
 
 categorySchema.pre('save', function(next) {
     this.slug = slugify(this.name, { lower: true })
+    this.name = this.name.trim()[0].toUpperCase() + this.name.slice(1).toLowerCase()
     next()
 })
 

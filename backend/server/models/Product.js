@@ -1,20 +1,19 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
+
 const OBJECT_ID = mongoose.Schema.Types.ObjectId
 
 const productSchema = mongoose.Schema({
     slug: {
         type: String,
-        lowercase: true,
-        unique: true
+        lowercase: true
     },
     name: {
         type: String,
-        unique: true,
         required: true
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     price: {
         type: Number,
@@ -39,11 +38,16 @@ const productSchema = mongoose.Schema({
     ratedBy: [{ type: OBJECT_ID, ref: 'User' }],
     category: {
         type: OBJECT_ID,
-        ref: 'Category',
-        required: [true, 'Product must belong to a category']
+        ref: 'Category'
     }
 }, {
     timestamps: true
+})
+
+productSchema.pre('save', function(next) {
+    this.slug = slugify(this.name, { lower: true })
+    this.name = this.name.trim()[0].toUpperCase() + this.name.slice(1).toLowerCase()
+    next()
 })
 
 const Product = mongoose.model('Product', productSchema)
